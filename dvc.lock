@@ -1,0 +1,78 @@
+schema: '2.0'
+stages:
+  get_audio_from_url@0:
+    cmd: "youtube-dl -x --audio-format mp3 -o \"data/audio/ActInf Textbook Group ~
+      Cohort 1 ~ Meeting 1 (Onboarding).mp3\" \"https://www.youtube.com/watch?v=ogV63M3uTlQ\"\
+      \n"
+    deps:
+    - path: data/.initial_dvc_dep.md
+      md5: a0456f91466d915a0825e4976bd8f1fa
+      size: 170
+    outs:
+    - path: data/audio/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).mp3
+      md5: 9216420e6b614e2a912125707d74a53e
+      size: 54055341
+  transcript_audio@0:
+    cmd: "whisper --language English --output_dir data/transcripts --output_format
+      txt \"data/audio/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).mp3\"\
+      \n"
+    deps:
+    - path: data/audio/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).mp3
+      md5: 9216420e6b614e2a912125707d74a53e
+      size: 54055341
+    outs:
+    - path: data/transcripts/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 34efec9cf8412848ea26421c815e98df
+      size: 40917
+  summarize_transcript@0:
+    cmd: "python3 src/summarize_transcript.py --input_transcript_file_path \"data/transcripts/ActInf
+      Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt\" --output_summary_file_path
+      \"data/summaries/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt\"\
+      \n"
+    deps:
+    - path: data/transcripts/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 34efec9cf8412848ea26421c815e98df
+      size: 40917
+    - path: src/summarize_transcript.py
+      md5: 8d2a104b345ad2d2b148d3cab6f03db3
+      size: 1543
+    outs:
+    - path: data/summaries/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 4d16ca45e130ecc648f1dd6850ec3d32
+      size: 714
+  get_description_from_youtube@0:
+    cmd: "python3 src/get_description_from_youtube.py --input_url \"https://www.youtube.com/watch?v=ogV63M3uTlQ\"\
+      \ --output_description_file_path \"data/descriptions/ActInf Textbook Group ~
+      Cohort 1 ~ Meeting 1 (Onboarding).txt\"\n"
+    deps:
+    - path: data/.initial_dvc_dep.md
+      md5: a0456f91466d915a0825e4976bd8f1fa
+      size: 170
+    - path: src/get_description_from_youtube.py
+      md5: 27f3274c59803908da0561b9cca7c98e
+      size: 706
+    outs:
+    - path: data/descriptions/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 84a8a7d887dcd2608b5af83a3a6680be
+      size: 281
+  extract_keywords_from_description_and_summary@0:
+    cmd: "python3 src/extract_keywords_from_description_and_summary.py --input_title
+      \"ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding)\" --input_description_file_path
+      \"data/descriptions/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt\"\
+      \ --input_summary_file_path \"data/summaries/ActInf Textbook Group ~ Cohort
+      1 ~ Meeting 1 (Onboarding).txt\" --output_keywords_file_path \"data/keywords/ActInf
+      Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt\"\n"
+    deps:
+    - path: data/descriptions/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 84a8a7d887dcd2608b5af83a3a6680be
+      size: 281
+    - path: data/summaries/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 4d16ca45e130ecc648f1dd6850ec3d32
+      size: 714
+    - path: src/extract_keywords_from_description_and_summary.py
+      md5: 6ec96c9b671cd2da7b126c08ee040eb4
+      size: 1889
+    outs:
+    - path: data/keywords/ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding).txt
+      md5: 77aedef6eeaa205fc73101da3c8af834
+      size: 252

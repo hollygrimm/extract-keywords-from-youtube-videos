@@ -1,0 +1,8 @@
+openai
+openai-whisper
+git+https://github.com/ytdl-org/youtube-dl.git
+langchain
+jupyter
+dvc[gdrive]
+python-dotenv
+fire
