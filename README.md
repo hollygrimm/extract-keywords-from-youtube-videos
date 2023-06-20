@@ -1,3 +1,19 @@
+# Audio Summarization with DVC
+
+Example of using DVC to build a pipeline for audio summarization. Tested on:
+
+[ActInf Textbook Group ~ Cohort 1 ~ Meeting 1 (Onboarding)](https://www.youtube.com/watch?v=ogV63M3uTlQ)
+
+## TODO
+- `dvc push` to IPFS:
+https://github.com/iterative/dvc/issues/930
+https://github.com/iterative/dvc/pull/4736
+
+- `dvc push` to Zenodo:
+https://github.com/iterative/dvc/issues/6009
+
+# Original README below:
+
 # extract-keywords-from-youtube-videos
 This project combines [youtube-dl](https://github.com/ytdl-org/youtube-dl), [whisper](https://github.com/openai/whisper), [LangChain](https://github.com/hwchase17/langchain) and [ChatGPT](https://chat.openai.com/) to extract keywords from YouTube videos. It was intented as a tool for [Lyon Data Science](https://www.youtube.com/@lyondatascience/videos) to better reference its videos.
 
